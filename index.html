@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeffrey McIntyre | Capabilities Statement</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* === SYSTEM VARIABLES === */
+        :root {
+            --bg-void: #020008;
+            --accent-magenta: #db3a65;
+            --accent-cyan: #00f2ff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --grid-size: 40px;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === ENGINEERING BLUEPRINT GRID === */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* === TYPOGRAPHY === */
+        h1, h2, h3 {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-magenta);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '[//]';
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .text-cyan { color: var(--accent-cyan); }
+        .text-magenta { color: var(--accent-magenta); }
+
+        /* === LAYOUT === */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            margin-bottom: 4rem;
+        }
+
+        .sys-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Added Contact/Business Elements */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .contact-info a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .badge {
+            border: 1px solid var(--accent-cyan);
+            background: rgba(0, 242, 255, 0.05);
+            color: var(--accent-cyan);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+        }
+
+        section {
+            margin-bottom: 6rem;
+        }
+
+        /* === COMPONENTS === */
+        
+        /* Glassmorphism Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--accent-magenta);
+            box-shadow: 0 0 20px rgba(219, 58, 101, 0.4), inset 0 0 10px rgba(219, 58, 101, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-cyan);
+            transition: background 0.4s ease;
+        }
+
+        .card:hover::before {
+            background: var(--accent-magenta);
+        }
+
+        /* Added List Styles for Cards */
+        .card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .card ul li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tech Stack Elements */
+        .skill-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-title {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: var(--accent-magenta);
+            border-color: var(--accent-magenta);
+            color: var(--bg-void);
+            box-shadow: 0 0 10px var(--accent-magenta);
+        }
+
+        /* Experience Timeline */
+        .exp-item {
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+            border-left: 1px solid rgba(0, 242, 255, 0.2);
+            position: relative;
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .exp-role {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .exp-meta {
+            font-size: 0.85rem;
+            color: var(--accent-magenta);
+            margin-bottom: 1rem;
+        }
+
+        .exp-bullets {
+            list-style-type: square;
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .exp-bullets li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* === INTERACTIVITY / REVEAL UTILITIES === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === SYSTEM STATUS TICKER === */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(2, 0, 8, 0.9);
+            border-top: 1px solid var(--accent-cyan);
+            padding: 0.5rem 2rem;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+            margin-right: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        #ticker-text {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            header { margin-bottom: 2rem; }
+            section { margin-bottom: 4rem; }
+            .sys-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            footer { padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container sys-header">
+            <div>
+                <div class="logo mono text-magenta">
+                    &lt;REDEYE_NEXUS /&gt;
+                </div>
+                <div class="sys-meta mono text-cyan" style="font-size: 0.8rem;">
+                    CAPABILITIES STATEMENT // V.2026.1
+                </div>
+            </div>
+            
+            <div class="contact-info mono">
+                <span class="badge">1099 CORP | W2</span>
+                <a href="https://RedEyeNexus.io" target="_blank">RedEyeNexus.io</a>
+                <a href="mailto:RedEyeCoding@gmail.com">RedEyeCoding@gmail.com</a>
+                <span style="color: var(--text-main);">347.447.4698</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="reveal">
+            <p class="mono text-cyan" style="margin-bottom: 1rem; font-size: 0.9rem;">> IDENTITY_CONFIRMED</p>
+            <h1>JEFFREY <span class="text-magenta">MCINTYRE</span></h1>
+            <p class="mono" style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">
+                [ SENIOR SYSTEMS ARCHITECT ]
+            </p>
+            <p style="font-size: 1.1rem; max-width: 800px;">
+                Senior Systems Architect with 12+ years of experience ensuring the stability of mission-critical infrastructure and high-performance data layers. I specialize in the "Connective Tissue" between carrier-grade networking and automated backend logic. I offer the technical depth of an infrastructure architect with the agility of an AI-fluent developer, focusing on zero-loss data ingestion, real-time observability, and automated triage for complex production environments.
+            </p>
+        </section>
+
+        <section class="reveal">
+            <h2>Core Metrics</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="kpi-value">$4.26M</div>
+                    <div class="mono text-magenta" style="margin-bottom: 0.5rem;">[ REVENUE_PROTECTED ]</div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Annual revenue safeguarded through systemic production bug resolution and resilient system architecture.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="kpi-value">90%</div>
+                    <div class="mono text-magenta" style="margin-bottom: 0.5rem;">[ DEPLOYMENT_REDUCTION ]</div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Decrease in implementation lifecycle time achieved via rigorous automation frameworks.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h2>Technical Architecture</h2>
+            
+            <div class="skill-group">
+                <div class="skill-title mono">Core Competencies</div>
+                <div class="stack-grid mono">
+                    <div class="tech-tag">Systems Architecture</div>
+                    <div class="tech-tag">Scripting</div>
+                    <div class="tech-tag">Ingestion Pipelines</div>
+                    <div class="tech-tag">Automation Engineering</div>
+                    <div class="tech-tag">Infrastructure Stability</div>
+                    <div class="tech-tag">Technical Liaison</div>
+                    
+
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-title mono">AI & Backend</div>
+                <div class="stack-grid mono">
+                    <div class="tech-tag">TypeScript</div>
+                    <div class="tech-tag">Python (7+ yrs)</div>
+                    <div class="tech-tag">NodeJS</div>
+                    <div class="tech-tag">Prisma (ORM)</div>
+                    <div class="tech-tag">Gemini LLM (API)</div>
+                    <div class="tech-tag">Llama 3.1 LLM</div>
+                    <div class="tech-tag">Jira / Slack / Twilio APIs</div>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-title mono">Data & Observability</div>
+                <div class="stack-grid mono">
+                    <div class="tech-tag">Relational Schema Design</div>
+                    <div class="tech-tag">RESTful API</div>
+                    <div class="tech-tag">Google Looker</div>
+                    <div class="tech-tag">MySQL</div>
+                    <div class="tech-tag">Postman (Test Scripting)</div>
+                    <div class="tech-tag">Wireshark (Deep Packet)</div>
+                    <div class="tech-tag">DataDog</div>
+                    <div class="tech-tag">Sumo Logic</div>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-title mono">The Infrastructure Backbone</div>
+                <div class="stack-grid mono">
+                    <div class="tech-tag">TCP/IP</div>
+                    <div class="tech-tag">BGP</div>
+                    <div class="tech-tag">DNS</div>
+                    <div class="tech-tag">SSL/TLS</div>
+                    <div class="tech-tag">SIP</div>
+                    <div class="tech-tag">Routing</div>
+                    <div class="tech-tag">Switching</div>
+                    <div class="tech-tag">VoIP</div>
+                    <div class="tech-tag">WebRTC</div>
+                    <div class="tech-tag">Docker / Linux / AWS</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h2>Project Spotlight</h2>
+            <div class="grid-2">
+                
+                <div class="card">
+                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Gemini AI Pipeline & Automation</h3>
+                    <ul>
+                        <li><strong style="color: var(--text-main);">The Build:</strong> Architected a data pipeline using Gemini LLM to automate high-volume email classification and sentiment analysis.</li>
+                        <li><strong style="color: var(--text-main);">The Result:</strong> Improved triage accuracy and reduced manual labor by 65%, directly unblocking engineering feedback loops.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">SMTP Header Analysis Tool</h3>
+                    <ul>
+                        <li><strong style="color: var(--text-main);">The Build:</strong> Engineered a Python tool to scan inbound email headers for specific technical triggers and metadata anomalies.</li>
+                        <li><strong style="color: var(--text-main);">The Result:</strong> Reduced the manual review cycle for Tier 3 escalations by 70% and significantly accelerated MTTR.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-magenta mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Biomechanics RESTful API (*Active*)</h3>
+                    <ul>
+                        <li><strong style="color: var(--text-main);">The Build:</strong> Architecting a containerized TypeScript and NodeJS API stack utilizing Prisma ORM for type-safe database interactions.</li>
+                        <li><strong style="color: var(--text-main);">The Result:</strong> Engineered a complex Relational Schema in MySQL validated via Automated Postman Test Scripts to ensure 100% data integrity for high-concurrency telemetry.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Yealink Provisioning Pipeline</h3>
+                    <ul>
+                        <li><strong style="color: var(--text-main);">The Build:</strong> Developed a Python-driven automation framework for the mass configuration and deployment of Yealink hardware.</li>
+                        <li><strong style="color: var(--text-main);">The Result:</strong> Eliminated manual provisioning errors and achieved a 90% reduction in implementation time for enterprise deployments.</li>
+                    </ul>
+                </div>
+                                <div class="card">
+                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Twilio Diagnostic Suite</h3>
+                    <ul>
+                        <li><strong style="color: var(--text-main);">The Build:</strong> Developed internal diagnostic tools using Python and the Twilio API to automate carrier-grade connectivity checks.</li>
+                        <li><strong style="color: var(--text-main);">The Result:</strong> Streamlined the verification of global SMS/Voice deliverability, reducing the triage cycle for communication defects by 55%.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h2>Professional Experience</h2>
+            
+            <div class="exp-item">
+                <div class="exp-role">Senior Technical Engineer (SaaS Escalations)</div>
+                <div class="exp-meta mono">SALESLOFT // 2021 — 2025</div>
+                <ul class="exp-bullets">
+                    <li>Served as the final Tier 3 escalation anchor for systemic production bugs, protecting $4.26M in recurring revenue.</li>
+                    <li>Integrated custom Python monitoring with Twilio's API to verify global SMS/Voice deliverability, identifying outages before impact.</li>
+                    <li>Partnered with Engineering teams to lead post-mortems and provide technical root-cause analysis for outages.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-role">Senior Operations Engineer (Critical Infrastructure)</div>
+                <div class="exp-meta mono">VOCAL IP // 2011 — 2021</div>
+                <ul class="exp-bullets">
+                    <li>Managed 24/7/365 operations for carrier-grade networks, maintaining 99.9% uptime for enterprise and healthcare clients.</li>
+                    <li>Architected the Yealink Automation Pipeline, utilizing Python to automate hardware vetting, cutting deployment timelines by 90%.</li>
+                    <li>Performed deep-dive protocol troubleshooting (SIP, BGP) via Wireshark to resolve packet-level bottlenecks in high-stakes environments.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="reveal" style="margin-bottom: 10rem;">
+            <h2>Certifications</h2>
+            <div class="stack-grid mono" style="margin-top: 1.5rem;">
+                <div class="tech-tag" style="border-color: var(--accent-magenta);">Cisco Certified Network Professional (CCNP)</div>
+                <div class="tech-tag" style="border-color: var(--accent-magenta);">Juniper Networks Certified Associate (JNCIA)</div>
+                <div class="tech-tag" style="border-color: var(--accent-magenta);">Fortinet Network Security Expert Level 4 (NSE4)</div>
+                <div class="tech-tag" style="border-color: var(--accent-magenta);">Comptia Network+</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="status-indicator"></div>
+        <div class="mono" id="ticker-text">> INITIALIZING SYSTEM PARAMETERS...</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Intersection Observer for Scroll Reveals
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: Stop observing once revealed
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+
+
+            // 2. System Status Ticker (Micro-Logs)
+            const logs = [
+                "> DNS Propagation: ACTIVE",
+                "> Revenue Stream: $4.26M Protected",
+                "> AI Logic Stream: LLAMA 3.1 SYNCHRONIZED",
+                "> BGP Peering: ESTABLISHED",
+                "> SIP Trunking: ZERO PACKET LOSS",
+                "> System Memory: OPTIMAL",
+                "> Deployment Delta: -90% LATENCY"
+            ];
+
+            const tickerText = document.getElementById('ticker-text');
+            let logIndex = 0;
+
+            setInterval(() => {
+                // Fade out
+                tickerText.style.opacity = 0;
+                
+                setTimeout(() => {
+                    // Change text and fade in
+                    logIndex = (logIndex + 1) % logs.length;
+                    tickerText.textContent = logs[logIndex];
+                    tickerText.style.opacity = 1;
+                }, 300); // Matches the CSS transition time
+
+            }, 4000); // Rotate every 4 seconds
+
+        });
+    </script>
+</body>
+</html>

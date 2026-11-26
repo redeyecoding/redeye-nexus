@@ -7,18 +7,24 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         /* === SYSTEM VARIABLES === */
         :root {
-            --bg-void: #020008;
-            --accent-magenta: #db3a65;
-            --accent-cyan: #00f2ff;
-            --text-main: #e2e8f0;
+            --bg-void: #05070e;
+            --bg-surface: rgba(15, 23, 42, 0.55);
+            --bg-surface-hover: rgba(20, 30, 52, 0.78);
+            --border-subtle: rgba(148, 163, 184, 0.16);
+            --border-cyan: rgba(0, 242, 255, 0.35);
+            --accent-magenta: #e11d62;
+            --accent-cyan: #00e5ff;
+            --text-main: #f1f5f9;
+            --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --grid-size: 40px;
+            --grid-size: 48px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
         }
 
         /* === RESET & BASE === */
@@ -28,56 +34,33 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-void);
             color: var(--text-main);
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.65;
             overflow-x: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* === ENGINEERING BLUEPRINT GRID === */
+        /* === AMBIENT GRID & GLOW === */
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            inset: 0;
             background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
-            background-size: var(--grid-size) var(--grid-size);
+                radial-gradient(circle at 15% 10%, rgba(0, 229, 255, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 25%, rgba(225, 29, 98, 0.07), transparent 45%),
+                linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
             z-index: -1;
             pointer-events: none;
-        }
-
-        /* === TYPOGRAPHY === */
-        h1, h2, h3 {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: var(--accent-magenta);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h2::before {
-            content: '[//]';
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-cyan);
-            font-size: 1rem;
         }
 
         .mono {
@@ -89,15 +72,22 @@
 
         /* === LAYOUT === */
         .container {
-            max-width: 1000px;
+            max-width: 1040px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
+        /* === STICKY GLASS HEADER === */
         header {
-            padding: 2rem 0;
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-            margin-bottom: 4rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(5, 7, 14, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 0;
+            margin-bottom: 4.5rem;
         }
 
         .sys-header {
@@ -105,22 +95,40 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
         }
 
-        /* Added Contact/Business Elements */
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sys-meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding-left: 14px;
+            border-left: 1px solid var(--border-subtle);
+        }
+
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 16px;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .contact-info a {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
         }
 
         .contact-info a:hover {
@@ -128,183 +136,349 @@
         }
 
         .badge {
-            border: 1px solid var(--accent-cyan);
-            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid var(--border-cyan);
+            background: rgba(0, 229, 255, 0.08);
             color: var(--accent-cyan);
             padding: 4px 10px;
-            font-size: 0.75rem;
-            border-radius: 2px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border-radius: 999px;
+            letter-spacing: 0.8px;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            margin-bottom: 5.5rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
             letter-spacing: 1px;
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
         }
 
-        .exp-bullets li strong {
-    color: #ffff00;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.95em;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 8px rgba(255, 255, 0, 0.4);
-}
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
 
+        h1 {
+            font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: 0.85rem;
+            color: var(--text-main);
+        }
 
+        .hero-role {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.75rem;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-summary {
+            font-size: 1.08rem;
+            color: var(--text-secondary);
+            max-width: 780px;
+            line-height: 1.75;
+        }
+
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 2rem;
+        }
+
+        .nav-pill {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-1px);
+        }
+
+        /* === SECTION HEADINGS === */
         section {
-            margin-bottom: 6rem;
+            margin-bottom: 5.5rem;
+            scroll-margin-top: 90px;
         }
 
-        /* === COMPONENTS === */
-        
-        /* Glassmorphism Cards */
-        .grid-2 {
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: '//';
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-magenta);
+            font-weight: 700;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-subtle), transparent);
+            margin-left: 8px;
+        }
+
+        /* === SKILLS GRID === */
+        .skills-layout {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.25rem;
         }
 
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            padding: 2rem;
-            border-radius: 4px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
+        .skill-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: border-color 0.25s ease, background 0.25s ease;
         }
 
-        .card:hover {
-            border-color: var(--accent-magenta);
-            box-shadow: 0 0 20px rgba(219, 58, 101, 0.4), inset 0 0 10px rgba(219, 58, 101, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--accent-cyan);
-            transition: background 0.4s ease;
-        }
-
-        .card:hover::before {
-            background: var(--accent-magenta);
-        }
-
-        /* Added List Styles for Cards */
-        .card ul {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .card ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .card ul li::before {
-            content: '>';
-            position: absolute;
-            left: 0;
-            color: var(--accent-cyan);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .kpi-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Tech Stack Elements */
-        .skill-group {
-            margin-bottom: 1.5rem;
+        .skill-box:hover {
+            border-color: var(--border-cyan);
+            background: var(--bg-surface-hover);
         }
 
         .skill-title {
+            font-size: 0.78rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            color: var(--accent-cyan);
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
         }
 
         .stack-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .tech-tag {
-            background: rgba(0, 242, 255, 0.05);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            border-radius: 2px;
-            transition: all 0.3s ease;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            color: var(--text-secondary);
+            padding: 0.35rem 0.7rem;
+            font-size: 0.78rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
         }
 
         .tech-tag:hover {
-            background: var(--accent-magenta);
-            border-color: var(--accent-magenta);
-            color: var(--bg-void);
-            box-shadow: 0 0 10px var(--accent-magenta);
+            background: rgba(0, 229, 255, 0.12);
+            border-color: var(--accent-cyan);
+            color: var(--text-main);
         }
 
-        /* Experience Timeline */
-        .exp-item {
-            margin-bottom: 3rem;
-            padding-left: 2rem;
-            border-left: 1px solid rgba(0, 242, 255, 0.2);
+        /* === PROJECT CARDS === */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            padding: 1.75rem;
+            border-radius: var(--radius-md);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
-        .exp-item::before {
-            content: '';
-            position: absolute;
-            left: -5px;
-            top: 5px;
-            width: 9px;
-            height: 9px;
-            background: var(--accent-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-cyan);
+        .card:hover {
+            border-color: var(--border-cyan);
+            background: var(--bg-surface-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .card-tag {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(225, 29, 98, 0.12);
+            border: 1px solid rgba(225, 29, 98, 0.35);
+            color: #fb7185;
+            white-space: nowrap;
+        }
+
+        .card-tag.cyan {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.3);
+            color: var(--accent-cyan);
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        /* === EXPERIENCE TIMELINE === */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2.25rem;
+        }
+
+        .exp-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--accent-cyan);
+            border-radius: var(--radius-md);
+            padding: 1.75rem 2rem;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .exp-item:hover {
+            border-left-color: var(--accent-magenta);
+            background: var(--bg-surface-hover);
+        }
+
+        .exp-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 0.35rem;
+        }
+
+        .exp-company {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .exp-dates {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
         }
 
         .exp-role {
-            font-size: 1.25rem;
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--accent-magenta);
+            margin-bottom: 1.15rem;
+        }
+
+        .exp-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .exp-bullets li {
+            position: relative;
+            padding-left: 1.25rem;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .exp-bullets li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .exp-bullets li strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* === CERTIFICATIONS === */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1rem;
+        }
+
+        .cert-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 1.15rem 1.35rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.2s ease;
+        }
+
+        .cert-card:hover {
+            border-color: var(--accent-magenta);
+        }
+
+        .cert-name {
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
         }
 
-        .exp-meta {
-            font-size: 0.85rem;
-            color: var(--accent-magenta);
-            margin-bottom: 1rem;
-        }
-
-        .exp-bullets {
-            list-style-type: square;
-            padding-left: 1.2rem;
+        .cert-id {
+            font-size: 0.76rem;
             color: var(--text-muted);
-            margin-top: 10px;
         }
 
-        .exp-bullets li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-
-        /* === INTERACTIVITY / REVEAL UTILITIES === */
+        /* === REVEAL ANIMATION === */
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(18px);
+            transition: opacity 0.65s ease-out, transform 0.65s ease-out;
         }
 
         .reveal.active {
@@ -312,14 +486,16 @@
             transform: translateY(0);
         }
 
-        /* === SYSTEM STATUS TICKER === */
+        /* === FOOTER STATUS TICKER === */
         footer {
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
-            background: rgba(2, 0, 8, 0.9);
-            border-top: 1px solid var(--accent-cyan);
-            padding: 0.5rem 2rem;
+            background: rgba(5, 7, 14, 0.92);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-subtle);
+            padding: 0.6rem 2rem;
             display: flex;
             align-items: center;
             z-index: 100;
@@ -331,29 +507,28 @@
             background: var(--accent-cyan);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--accent-cyan);
-            margin-right: 15px;
+            margin-right: 14px;
             animation: pulse 2s infinite;
         }
 
         #ticker-text {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            letter-spacing: 0.5px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.4px;
             transition: opacity 0.3s ease;
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            header { margin-bottom: 2rem; }
-            section { margin-bottom: 4rem; }
-            .sys-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            footer { padding: 0.5rem 1rem; }
+            .container { padding: 0 1.25rem; }
+            header { margin-bottom: 2.5rem; }
+            .sys-meta { display: none; }
+            .exp-item { padding: 1.35rem; }
+            footer { padding: 0.55rem 1.25rem; }
         }
     </style>
 </head>
@@ -361,13 +536,9 @@
 
     <header>
         <div class="container sys-header">
-            <div>
-                <div class="logo mono text-magenta">
-                    &lt;REDEYE_NEXUS /&gt;
-                </div>
-                <div class="sys-meta mono text-cyan" style="font-size: 0.8rem;">
-                    CAPABILITIES STATEMENT // V.2026.1
-                </div>
+            <div class="brand-wrap">
+                <div class="logo mono text-magenta"><REDEYE_NEXUS /></div>
+                <div class="sys-meta mono">CAPABILITIES // V.2026.2</div>
             </div>
             
             <div class="contact-info mono">
@@ -381,213 +552,200 @@
 
     <main class="container">
         
-        <section class="reveal">
-            <p class="mono text-cyan" style="margin-bottom: 1rem; font-size: 0.9rem;">> IDENTITY_CONFIRMED</p>
+        <section class="hero reveal active">
+            <div class="eyebrow mono">
+                <span class="eyebrow-dot"></span>
+                AVAILABLE FOR SENIOR SUPPORT & AUTOMATION ROLES
+            </div>
             <h1>JEFFREY <span class="text-magenta">MCINTYRE</span></h1>
-            <p class="mono" style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">
-                [ SENIOR TECHNICAL SUPPORT ENGINEER (OPERATIONS) ] 
+            <p class="hero-role mono">
+                Senior Technical Support Engineer • Python Automation • AI Workflow & Agent Evaluation
             </p>
-            <p style="font-size: 1.1rem; max-width: 800px;">
-                Senior Technical Support Engineer with 12+ years of experience resolving complex Tier 3 escalations, stabilizing mission-critical infrastructure, and protecting enterprise retention. Expert at isolating failures across the full request lifecycle—from network transport layers (TCP/IP, BGP, SIP) down to REST APIs, database queries, and backend application code. Combines rigorous root-cause analysis with practical Python automation to eliminate triage overhead, lower MTTR, and bridge the diagnostic gap between support operations and core engineering teams.
+            <p class="hero-summary">
+                Senior Technical Support Engineer and automation developer with over 12 years of experience combining network transport diagnostics (TCP/IP, BGP, SIP) with backend API troubleshooting and Python tooling. Builds practical automation scripts, LLM API integrations, and verified AI workflows to cut manual triage, shorten resolution times, and keep production systems stable.
             </p>
+            <div class="quick-nav mono">
+                <a href="#skills" class="nav-pill">01. Skills</a>
+                <a href="#projects" class="nav-pill">02. Projects</a>
+                <a href="#experience" class="nav-pill">03. Experience</a>
+                <a href="#certifications" class="nav-pill">04. Certifications</a>
+            </div>
         </section>
 
-        <!-- <section class="reveal">
-            <h2>Core Metrics</h2>
+        <section id="skills" class="reveal">
+            <h2>Technical Stack</h2>
+            <div class="skills-layout">
+                <div class="skill-box">
+                    <div class="skill-title mono">Languages & Backend</div>
+                    <div class="stack-grid mono">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">REST APIs</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">SQLite</span>
+                        <span class="tech-tag">JSON</span>
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Linux</span>
+                    </div>
+                </div>
+
+                <div class="skill-box">
+                    <div class="skill-title mono">AI & Automation</div>
+                    <div class="stack-grid mono">
+                        <span class="tech-tag">LLM API Integration (Gemini)</span>
+                        <span class="tech-tag">AI Workflow Automation</span>
+                        <span class="tech-tag">AI Agent Evaluation</span>
+                        <span class="tech-tag">Automated Testing (pytest)</span>
+                        <span class="tech-tag">APScheduler</span>
+                    </div>
+                </div>
+
+                <div class="skill-box">
+                    <div class="skill-title mono">Diagnostics & Observability</div>
+                    <div class="stack-grid mono">
+                        <span class="tech-tag">Wireshark</span>
+                        <span class="tech-tag">Postman</span>
+                        <span class="tech-tag">Datadog</span>
+                        <span class="tech-tag">Sumo Logic</span>
+                        <span class="tech-tag">GCP</span>
+                        <span class="tech-tag">Root Cause Analysis</span>
+                    </div>
+                </div>
+
+                <div class="skill-box">
+                    <div class="skill-title mono">Networking & Telecom</div>
+                    <div class="stack-grid mono">
+                        <span class="tech-tag">TCP/IP</span>
+                        <span class="tech-tag">BGP</span>
+                        <span class="tech-tag">SIP</span>
+                        <span class="tech-tag">RTP</span>
+                        <span class="tech-tag">IPsec / SD-WAN</span>
+                        <span class="tech-tag">WebRTC</span>
+                        <span class="tech-tag">BroadWorks</span>
+                        <span class="tech-tag">Cisco CUCM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <h2>Selected Projects</h2>
             <div class="grid-2">
                 <div class="card">
-                    <div class="kpi-value">$4.26M</div>
-                    <div class="mono text-magenta" style="margin-bottom: 0.5rem;">[ REVENUE_RETENTION ]</div>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Protected $4.26M in annual recurring revenue by diagnosing and driving root-cause fixes for systemic production bugs on enterprise accounts.
+                    <div class="card-header">
+                        <h3>Relational REST API & Automated Test Suite</h3>
+                        <span class="card-tag mono">Python / MySQL 8.4</span>
+                    </div>
+                    <p>
+                        Designed and maintain a Python REST API backed by a 41-table MySQL relational database. Used AI-assisted workflows for scaffolding while owning schema remediation, slug deduplication, and full parity verification across 136 automated <span class="mono text-cyan">pytest</span> tests.
                     </p>
                 </div>
+
                 <div class="card">
-                    <div class="kpi-value">90%</div>
-                    <div class="mono text-magenta" style="margin-bottom: 0.5rem;">[ AUTOMATION_IMPACT ]</div>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Reduced deployment and provisioning timelines by up to 90% across hardware and software platforms using custom Python automation frameworks.
+                    <div class="card-header">
+                        <h3>Local Media Automation & Scheduling Tool</h3>
+                        <span class="card-tag cyan mono">Python / SQLite</span>
+                    </div>
+                    <p>
+                        Built a local Python and SQLite scheduling application using APScheduler to automate multi-platform publishing workflows with manual local storage controls.
                     </p>
                 </div>
-            </div>
-        </section> -->
 
-        <section class="reveal">
-            <h2>TECHNICAL_MANIFEST // V.2026.1</h2>
-
-            <div class="skill-group">
-                <div class="skill-title mono">Languages & Scripting</div>
-                <div class="stack-grid mono">
-                    <div class="tech-tag">Python</div>
-                    <div class="tech-tag">TypeScript</div>
-                    <div class="tech-tag">JavaScript</div>
-                    <div class="tech-tag">SQL</div>
-                    <div class="tech-tag">Bash</div>
-                    <div class="tech-tag">HTML</div>
-                    <div class="tech-tag">JSON</div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Automated Support Triage & Log Pipeline</h3>
+                        <span class="card-tag cyan mono">Gemini API</span>
+                    </div>
+                    <p>
+                        Built custom Python scripts integrating Jira, Gmail, and the Gemini API to extract email diagnostic metadata, classify incoming incidents, and cut manual triage overhead for Tier 3 support queues.
+                    </p>
                 </div>
-            </div>
 
-            <div class="skill-group">
-                <div class="skill-title mono">Diagnostics & Incident Management</div>
-                <div class="stack-grid mono">
-                    <div class="tech-tag">Root Cause Analysis (RCA)</div>
-                    <div class="tech-tag">Major Incident Management</div>
-                    <div class="tech-tag">Postman (API Scripting)</div>
-                    <div class="tech-tag">Wireshark (Deep Packet Analysis)</div>
-                    <div class="tech-tag">Datadog</div>
-                    <div class="tech-tag">Sumo Logic</div>
-                    <div class="tech-tag">Log Parsing & Correlation</div>
-                    <div class="tech-tag">Production Escalation Triage</div>
-                </div>
-            </div>
-
-            <div class="skill-group">
-                <div class="skill-title mono">API & Data Architecture</div>
-                <div class="stack-grid mono">
-                    <div class="tech-tag">RESTful APIs</div>
-                    <div class="tech-tag">Webhooks</div>
-                    <div class="tech-tag">Relational Schema Design</div>
-                    <div class="tech-tag">MySQL</div>
-                    <div class="tech-tag">PostgreSQL</div>
-                    <div class="tech-tag">Prisma (ORM)</div>
-                    <div class="tech-tag">Drizzle (ORM)</div>
-                </div>
-            </div>
-
-            <div class="skill-group">
-                <div class="skill-title mono">Networking & Transport Protocols</div>
-                <div class="stack-grid mono">
-                    <div class="tech-tag">TCP/IP</div>
-                    <div class="tech-tag">BGP</div>
-                    <div class="tech-tag">DNS</div>
-                    <div class="tech-tag">IPsec / SD-WAN</div>
-                    <div class="tech-tag">SSL / TLS</div>
-                    <div class="tech-tag">SIP</div>
-                    <div class="tech-tag">RTP</div>
-                    <div class="tech-tag">Cisco Dial-Peers</div>
-                    <div class="tech-tag">Routing & Switching</div>
-                    <div class="tech-tag">VoIP</div>
-                    <div class="tech-tag">WebRTC</div>
-                </div>
-            </div>
-
-            <div class="skill-group">
-                <div class="skill-title mono">Cloud, Systems & Automation</div>
-                <div class="stack-grid mono">
-                    <div class="tech-tag">Linux Administration</div>
-                    <div class="tech-tag">Docker</div>
-                    <div class="tech-tag">Google Cloud Platform (GCP)</div>
-                    <div class="tech-tag">IAM / RBAC</div>
-                    <div class="tech-tag">CI/CD (GitHub Actions)</div>
-                    <div class="tech-tag">Git</div>
-                    <div class="tech-tag">Gemini API Automation Workflows</div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Diagnostic & Provisioning Tooling</h3>
+                        <span class="card-tag cyan mono">Python / FTP / XML</span>
+                    </div>
+                    <p>
+                        Built Python parsers and FTP automation scripts to trace message hops, catch routing loops, push verified XML templates, and run batch firmware updates across enterprise hardware.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section class="reveal">
-            <h2>Project Spotlight</h2>
-            <div class="grid-2">
-
-                <div class="card">
-                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Automated Support Triage & Log Pipeline</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> Inbound support queues were choked by unstructured error tickets; built an automated Python ingestion pipeline using the Gemini API to parse payloads and classify issues by error signature.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Cut manual support triage labor by 85% (verified via Salesforce KPIs), delivering pre-parsed diagnostic payloads directly to Tier 3 engineers.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">SMTP Header & Protocol Diagnostic Tool</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> Manual review of raw message headers caused severe turnaround delays on mail routing escalations; engineered a Python parser to trace hops and detect routing loops and authentication drops.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Reduced manual investigation time for transport-layer escalations by 70%, accelerating MTTR on complex mail flow defects.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-magenta mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Biomechanics Telemetry REST API (*Active*)</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> High-concurrency telemetry ingestion required strict relational integrity without database deadlocks; built a containerized backend service using TypeScript, Node.js, and MySQL with Drizzle and Prisma ORMs.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Enforced 100% data consistency under concurrent write loads, validating authentication, rate limiting, and failure states via automated Postman test suites.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Enterprise Hardware Provisioning Engine</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> Device-by-device staging for large client deployments took weeks and introduced human configuration errors; wrote a Python automation engine pushing verified XML templates over FTP.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Eliminated staging errors entirely and compressed a two-week onboarding rollout down to minutes with zero data corruption.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">Twilio Diagnostic Suite</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> Manual client telephony setup and voice error triage caused extended onboarding delays; built Python diagnostic tooling leveraging the Twilio API to automate account provisioning, CNAM updates, and voice carrier routing checks.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Simplified client onboarding configurations and cut the troubleshooting turnaround for communication defects by 55%.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-cyan mono" style="font-size: 1rem; margin-bottom: 0.5rem;">VoIP Directory & Provisioning Automation</h3>
-                    <ul>
-                        <li><strong style="color: var(--text-main);">Problem & Build:</strong> Manual synchronization of Polycom XML directory files via FTP took two weeks and risked configuration corruption; engineered a Python automation engine with automated rollback logic to revert system state upon sync failure.</li>
-                        <li><strong style="color: var(--text-main);">Business Impact:</strong> Compressed a 2-week manual provisioning cycle into a 10-second automated execution while maintaining 100% data accuracy across the enterprise fleet.</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="reveal">
+        <section id="experience" class="reveal">
             <h2>Professional Experience</h2>
-            
-            <div class="exp-item">
-                <div class="exp-role">Senior Technical Support Engineer (SaaS Escalations)</div>
-                <div class="exp-meta mono">SALESLOFT (SaaS) // 2021 — 2025</div>
-                <ul class="exp-bullets">
-                    <li><strong>[Platform Stability & Churn Prevention]:</strong> Served as primary Tier 3 escalation anchor for high-value enterprise accounts, isolating root causes in distributed application code to safeguard $4.26M in annual recurring revenue.</li>
-                    <li><strong>[Integration & API Debugging]:</strong> Correlated client payloads against internal microservice traces using Datadog and Sumo Logic logs, eliminating silent webhook drops and reducing MTTR on API timeouts.</li>
-                    <li><strong>[Queue Automation]:</strong> Built Python scripts integrating Jira, Gmail, and the Gemini API to extract diagnostic metadata and classify incoming incidents, reducing manual triage time by 65%.</li>
-                    <li><strong>[Engineering Bug Verification]:</strong> Led incident post-mortems with core engineering teams, authoring isolated reproduction suites with exact cURL payloads and Postman collections to ensure first-pass fix accuracy.</li>
-                    <li><strong>[Escalation Deflection]:</strong> Audited codebase logic and error logs to identify recurring Tier 2 bottlenecks, authoring structured Markdown runbooks that significantly increased First-Call Resolution (FCR).</li>
-                </ul>
-            </div>
+            <div class="exp-list">
+                
+                <div class="exp-item">
+                    <div class="exp-top">
+                        <div class="exp-company">RedEyeCoding</div>
+                        <div class="exp-dates mono">03/2025 — PRESENT</div>
+                    </div>
+                    <div class="exp-role mono">Independent Automation Developer & Technical Consultant</div>
+                    <ul class="exp-bullets">
+                        <li><strong>Backend API & DB:</strong> Built and maintain a Python REST API backed by a 41-table MySQL 8.4 database, owning schema parity and verification across 136 automated pytest tests.</li>
+                        <li><strong>AI Workflows & Data:</strong> Built internal Python scripts and AI-driven research pipelines for recurring weekly market analysis, pairing automated extraction with manual code review and source validation to catch hallucinations.</li>
+                        <li><strong>AI Agent Evaluation (Contract):</strong> Audited multi-turn AI agent tool-call execution logs, terminal outputs, and behavioral compliance across real codebases.</li>
+                    </ul>
+                </div>
 
-            <div class="exp-item">
-                <div class="exp-role">Senior Technical Support Engineer (Critical Infrastructure)</div>
-                <div class="exp-meta mono">VOCAL IP (ISP) // 2011 — 2021</div>
-                <ul class="exp-bullets">
-                    <li><strong>[Carrier-Grade Operations]:</strong> Maintained continuous 99.9% uptime across 24/7 mission-critical voice and data networks supporting high-compliance healthcare and financial enterprise clients.</li>
-                    <li><strong>[Packet-Level Diagnostics]:</strong> Dissected SIP ladder diagrams, RTP stream jitter, and BGP route advertisements using Wireshark to isolate and resolve transport-layer carrier bottlenecks.</li>
-                    <li><strong>[Traffic Capacity & Session Stability]:</strong> Re-engineered BroadWorks routing parameters and firewall traversal rules, stopping call drops caused by sudden SIP message floods during peak utilization.</li>
-                    <li><strong>[Deployment Automation]:</strong> Architected a Python automation framework for zero-touch configuration and batch firmware pushes, cutting enterprise hardware rollout timelines by 90%.</li>
-                    <li><strong>[Heterogeneous System Interoperability]:</strong> Configured Cisco CUCM, CUE, and voice gateway dial-peers, analyzing Q.931 signaling data to eliminate translation mismatches between SIP trunks and legacy circuits.</li>
-                </ul>
-            </div>
+                <div class="exp-item">
+                    <div class="exp-top">
+                        <div class="exp-company">Salesloft</div>
+                        <div class="exp-dates mono">03/2021 — 02/2025</div>
+                    </div>
+                    <div class="exp-role mono">Senior Technical Support Engineer</div>
+                    <ul class="exp-bullets">
+                        <li><strong>Revenue Protection & Trace Analysis:</strong> Protected $4.26M in annual recurring revenue by using Datadog and Sumo Logic logs to correlate microservice traces, isolate distributed application bugs, and eliminate silent webhook drops.</li>
+                        <li><strong>Transport Diagnostics:</strong> Built a Python parser to trace message hops and detect routing loops, cutting manual transport-layer investigation time.</li>
+                        <li><strong>LLM Triage Automation:</strong> Wrote custom Python scripts integrating Jira, Gmail, and the Gemini API to extract email diagnostic metadata and automate incident classification, reducing manual triage work.</li>
+                        <li><strong>Engineering Escalations:</strong> Led incident post-mortems with core engineering by building isolated reproduction suites in cURL and Postman to improve first-pass fix accuracy and First-Call Resolution.</li>
+                    </ul>
+                </div>
 
-            <div class="exp-item">
-                <div class="exp-role">Network Operations Center Engineer (NoC)</div>
-                <div class="exp-meta mono">TRANSBEAM (ISP) // 2011 — 2013</div>
-                <ul class="exp-bullets">
-                    <li><strong>[Outage Management]:</strong> Managed technical response for 20+ critical network outages, directly troubleshooting infrastructure faults to bring services back to 99.9% availability.</li>
-                    <li><strong>[Tier 2 Escalation Relief]:</strong> Resolved 80% of escalated technical tickets independently by analyzing Oracle SIP traces and adjusting BroadWorks profiles to keep senior engineers clear of routine escalations.</li>
-                    <li><strong>[Carrier Fault Isolation]:</strong> Collaborated directly with carrier partners (AT&T, Lumen, Verizon) to isolate circuit and hardware failures, reducing chronic system downtime by 25%.</li>
-                </ul>
+                <div class="exp-item">
+                    <div class="exp-top">
+                        <div class="exp-company">Vocal IP</div>
+                        <div class="exp-dates mono">06/2011 — 03/2021</div>
+                    </div>
+                    <div class="exp-role mono">Senior Technical Support Engineer</div>
+                    <ul class="exp-bullets">
+                        <li><strong>Carrier-Grade Operations:</strong> Maintained continuous uptime for high-compliance enterprise clients by dissecting BGP routes, RTP jitter, and SIP ladder diagrams in Wireshark to resolve transport-layer bottlenecks.</li>
+                        <li><strong>Provisioning Automation:</strong> Wrote a Python FTP automation script to push verified XML templates, turning two-week client rollouts into fast, repeatable runs with zero errors.</li>
+                        <li><strong>Voice & Signaling Stability:</strong> Re-engineered BroadWorks routing parameters and Cisco CUCM dial-peers to stop call drops caused by sudden SIP message floods and eliminate signaling mismatches on legacy circuits.</li>
+                        <li><strong>Zero-Touch Deployment:</strong> Built a custom Python automation framework for zero-touch configuration and batch firmware pushes across enterprise hardware rollouts.</li>
+                    </ul>
+                </div>
+
             </div>
         </section>
 
-        <section class="reveal" style="margin-bottom: 10rem;">
+        <section id="certifications" class="reveal" style="margin-bottom: 8rem;">
             <h2>Certifications</h2>
-            <div class="stack-grid mono" style="margin-top: 1.5rem;">
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">Cisco Certified Network Professional (CCNP) — Credential ID: CSC011847765</div>
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">Juniper Networks Certified Associate (JNCIA) — Credential ID: JPR00268684</div>
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">Fortinet Network Security Expert 4 (NSE4) — Credential ID: BNzLp6h5KC</div>
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">CompTIA Network+ — Credential ID: COMP001009020397</div>
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">freeCodeCamp — JavaScript Algorithms & Data Structures</div>
-                <div class="tech-tag" style="border-color: var(--accent-magenta);">Kingsborough Community College — Associate Degree (2002 – 2005)</div>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-name">Cisco Certified Network Professional (CCNP)</div>
+                    <div class="cert-id mono">Credential ID: CSC011847765</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-name">Fortinet Network Security Expert 4 (NSE4)</div>
+                    <div class="cert-id mono">Credential ID: BNzLp6h5KC</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-name">Juniper Networks Certified Associate (JNCIA)</div>
+                    <div class="cert-id mono">Credential ID: JPR00268684</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-name">CompTIA Network+</div>
+                    <div class="cert-id mono">Credential ID: COMP001009020397</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-name">Mercor — "Introduction to Agents" (AI Agent Evaluation)</div>
+                    <div class="cert-id mono">Credential ID: MRC-2026-9PDFWCXF (11/2026)</div>
+                </div>
             </div>
         </section>
 
@@ -595,60 +753,40 @@
 
     <footer>
         <div class="status-indicator"></div>
-        <div class="mono" id="ticker-text">> INITIALIZING SYSTEM PARAMETERS...</div>
+        <div class="mono" id="ticker-text">> SYSTEM READY // REDEYE_NEXUS V.2026.2</div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Intersection Observer for Scroll Reveals
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Optional: Stop observing once revealed
-                        // observer.unobserve(entry.target); 
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.12 });
 
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach(el => observer.observe(el));
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-
-            // 2. System Status Ticker (Micro-Logs)
             const logs = [
-                "> DNS Propagation: ACTIVE",
-                "> Revenue Stream: $4.26M Protected",
-                "> AI Logic Stream: LLAMA 3.1 SYNCHRONIZED",
-                "> BGP Peering: ESTABLISHED",
-                "> SIP Trunking: ZERO PACKET LOSS",
-                "> System Memory: OPTIMAL",
-                "> Deployment Delta: -90% LATENCY"
+                "> SYSTEM READY // REDEYE_NEXUS V.2026.2",
+                "> REVENUE PROTECTED: $4.26M ENTERPRISE ARR",
+                "> API VERIFICATION: 136 PYTEST SUITES PASSING",
+                "> AI WORKFLOWS: GEMINI API & AGENT EVALUATION ACTIVE",
+                "> NETWORK DIAGNOSTICS: TCP/IP // BGP // SIP // WIRESHARK"
             ];
 
             const tickerText = document.getElementById('ticker-text');
             let logIndex = 0;
 
             setInterval(() => {
-                // Fade out
                 tickerText.style.opacity = 0;
-                
                 setTimeout(() => {
-                    // Change text and fade in
                     logIndex = (logIndex + 1) % logs.length;
                     tickerText.textContent = logs[logIndex];
                     tickerText.style.opacity = 1;
-                }, 300); // Matches the CSS transition time
-
-            }, 4000); // Rotate every 4 seconds
-
+                }, 300);
+            }, 4000);
         });
     </script>
 </body>
